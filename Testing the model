@@ -1,0 +1,24 @@
+
+model = keras.models.load_model('hand_gesture_model.h5')
+
+
+image = cv2.imread('test_image.jpg', cv2.IMREAD_GRAYSCALE)
+
+
+image = cv2.resize(image, (64, 64))
+image = np.reshape(image, (1, 64, 64, 1))
+image = image / 255.0
+
+
+prediction = model.predict(image)
+class_index = np.argmax(prediction)
+
+
+gesture_labels = ['Fist', 'L', 'Okay', 'Palm', 'Peace']
+gesture_label = gesture_labels[class_index]
+
+
+cv2.imshow('Test Image', cv2.imread('test_image.jpg'))
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+print('Predicted Gesture: ', gesture_label)
