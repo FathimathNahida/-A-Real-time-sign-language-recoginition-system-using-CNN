@@ -1,0 +1,23 @@
+import cv2
+import numpy as np
+
+# read the video
+cap = cv2.VideoCapture('sign_language_video.mp4')
+
+# extract the frames
+frames = []
+while cap.isOpened():
+    ret, frame = cap.read()
+    if not ret:
+        break
+    frame = cv2.resize(frame, (224, 224))
+    frames.append(frame)
+
+# extract the features
+features = []
+for frame in frames:
+    feature = extract_features(frame)
+    features.append(feature)
+
+# convert the features to an array
+X = np.array(features)
